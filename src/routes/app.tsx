@@ -12,13 +12,14 @@ export const Route = createFileRoute("/app")({
   component: AppLayout,
 });
 
-const NAV = [
+type NavItem = { to: string; label: string; icon: typeof Home; exact?: boolean };
+const NAV: NavItem[] = [
   { to: "/app", label: "Início", icon: Home, exact: true },
   { to: "/app/assistidos", label: "Assistidos", icon: Users },
   { to: "/app/agenda", label: "Agenda", icon: CalendarDays },
   { to: "/app/mensagens", label: "Mensagens", icon: MessageCircle },
   { to: "/app/perfil", label: "Perfil", icon: UserCircle2 },
-] as const;
+];
 
 function AppLayout() {
   const navigate = useNavigate();
