@@ -6,11 +6,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur-lg">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link to="/" className="flex items-center gap-2">
-          <BrandLogo size={36} />
-          <span className="text-lg font-bold tracking-tight">
-            Conecta<span className="[color:var(--brand-yellow)]">APAE</span>
-          </span>
+        <Link to="/" className="flex items-center" aria-label="ConectaAPAE — início">
+          <BrandLogo size={44} />
         </Link>
         <nav className="hidden items-center gap-8 md:flex">
           <a href="#funcionalidades" className="text-sm font-medium text-muted-foreground transition hover:text-foreground">
