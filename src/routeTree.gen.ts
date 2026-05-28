@@ -17,6 +17,7 @@ import { Route as LoginProfissionalRouteImport } from './routes/login_.profissio
 import { Route as LoginFamiliaRouteImport } from './routes/login_.familia'
 import { Route as CadastroProfissionalRouteImport } from './routes/cadastro_.profissional'
 import { Route as CadastroFamiliaRouteImport } from './routes/cadastro_.familia'
+import { Route as AppAssistidosIndexRouteImport } from './routes/app.assistidos.index'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -58,6 +59,11 @@ const CadastroFamiliaRoute = CadastroFamiliaRouteImport.update({
   path: '/cadastro/familia',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppAssistidosIndexRoute = AppAssistidosIndexRouteImport.update({
+  id: '/assistidos/',
+  path: '/assistidos/',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/login/familia': typeof LoginFamiliaRoute
   '/login/profissional': typeof LoginProfissionalRoute
   '/app/': typeof AppIndexRoute
+  '/app/assistidos/': typeof AppAssistidosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -77,6 +84,7 @@ export interface FileRoutesByTo {
   '/login/familia': typeof LoginFamiliaRoute
   '/login/profissional': typeof LoginProfissionalRoute
   '/app': typeof AppIndexRoute
+  '/app/assistidos': typeof AppAssistidosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   '/login_/familia': typeof LoginFamiliaRoute
   '/login_/profissional': typeof LoginProfissionalRoute
   '/app/': typeof AppIndexRoute
+  '/app/assistidos/': typeof AppAssistidosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -100,6 +109,7 @@ export interface FileRouteTypes {
     | '/login/familia'
     | '/login/profissional'
     | '/app/'
+    | '/app/assistidos/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/login/familia'
     | '/login/profissional'
     | '/app'
+    | '/app/assistidos'
   id:
     | '__root__'
     | '/'
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/login_/familia'
     | '/login_/profissional'
     | '/app/'
+    | '/app/assistidos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -189,15 +201,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CadastroFamiliaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/assistidos/': {
+      id: '/app/assistidos/'
+      path: '/assistidos'
+      fullPath: '/app/assistidos/'
+      preLoaderRoute: typeof AppAssistidosIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
+  AppAssistidosIndexRoute: typeof AppAssistidosIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppIndexRoute: AppIndexRoute,
+  AppAssistidosIndexRoute: AppAssistidosIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
