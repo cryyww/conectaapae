@@ -125,9 +125,8 @@ function AppLayout() {
 
       {/* Topbar (mobile) */}
       <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border bg-card/80 px-4 py-3 backdrop-blur md:hidden">
-        <div className="flex items-center gap-2">
-          <BrandLogo size={28} />
-          <span className="font-bold">ConectaAPAE</span>
+        <div className="flex items-center">
+          <BrandLogo size={32} />
         </div>
         <Button variant="ghost" size="icon" aria-label="Abrir menu" onClick={() => setOpen((v) => !v)}>
           <Menu className="h-5 w-5" />
