@@ -17,6 +17,7 @@ import { Route as LoginProfissionalRouteImport } from './routes/login_.profissio
 import { Route as LoginFamiliaRouteImport } from './routes/login_.familia'
 import { Route as CadastroProfissionalRouteImport } from './routes/cadastro_.profissional'
 import { Route as CadastroFamiliaRouteImport } from './routes/cadastro_.familia'
+import { Route as AppPerfilRouteImport } from './routes/app.perfil'
 import { Route as AppMensagensRouteImport } from './routes/app.mensagens'
 import { Route as AppAgendaRouteImport } from './routes/app.agenda'
 import { Route as AppAssistidosIndexRouteImport } from './routes/app.assistidos.index'
@@ -62,6 +63,11 @@ const CadastroFamiliaRoute = CadastroFamiliaRouteImport.update({
   path: '/cadastro/familia',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppPerfilRoute = AppPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppMensagensRoute = AppMensagensRouteImport.update({
   id: '/mensagens',
   path: '/mensagens',
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/mensagens': typeof AppMensagensRoute
+  '/app/perfil': typeof AppPerfilRoute
   '/cadastro/familia': typeof CadastroFamiliaRoute
   '/cadastro/profissional': typeof CadastroProfissionalRoute
   '/login/familia': typeof LoginFamiliaRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/mensagens': typeof AppMensagensRoute
+  '/app/perfil': typeof AppPerfilRoute
   '/cadastro/familia': typeof CadastroFamiliaRoute
   '/cadastro/profissional': typeof CadastroProfissionalRoute
   '/login/familia': typeof LoginFamiliaRoute
@@ -117,6 +125,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/mensagens': typeof AppMensagensRoute
+  '/app/perfil': typeof AppPerfilRoute
   '/cadastro_/familia': typeof CadastroFamiliaRoute
   '/cadastro_/profissional': typeof CadastroProfissionalRoute
   '/login_/familia': typeof LoginFamiliaRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/app/agenda'
     | '/app/mensagens'
+    | '/app/perfil'
     | '/cadastro/familia'
     | '/cadastro/profissional'
     | '/login/familia'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/app/agenda'
     | '/app/mensagens'
+    | '/app/perfil'
     | '/cadastro/familia'
     | '/cadastro/profissional'
     | '/login/familia'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/app/agenda'
     | '/app/mensagens'
+    | '/app/perfil'
     | '/cadastro_/familia'
     | '/cadastro_/profissional'
     | '/login_/familia'
@@ -237,6 +249,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CadastroFamiliaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/perfil': {
+      id: '/app/perfil'
+      path: '/perfil'
+      fullPath: '/app/perfil'
+      preLoaderRoute: typeof AppPerfilRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/mensagens': {
       id: '/app/mensagens'
       path: '/mensagens'
@@ -271,6 +290,7 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppAgendaRoute: typeof AppAgendaRoute
   AppMensagensRoute: typeof AppMensagensRoute
+  AppPerfilRoute: typeof AppPerfilRoute
   AppIndexRoute: typeof AppIndexRoute
   AppAssistidosIdRoute: typeof AppAssistidosIdRoute
   AppAssistidosIndexRoute: typeof AppAssistidosIndexRoute
@@ -279,6 +299,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppAgendaRoute: AppAgendaRoute,
   AppMensagensRoute: AppMensagensRoute,
+  AppPerfilRoute: AppPerfilRoute,
   AppIndexRoute: AppIndexRoute,
   AppAssistidosIdRoute: AppAssistidosIdRoute,
   AppAssistidosIndexRoute: AppAssistidosIndexRoute,
