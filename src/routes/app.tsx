@@ -83,11 +83,8 @@ function AppLayout() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Sidebar (desktop) */}
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-border bg-sidebar text-sidebar-foreground md:flex">
-        <div className="flex items-center gap-3 px-6 py-6">
-          <BrandLogo size={36} />
-          <span className="text-lg font-bold">
-            Conecta<span className="[color:var(--brand-yellow)]">APAE</span>
-          </span>
+        <div className="flex items-center px-6 py-6">
+          <BrandLogo size={44} />
         </div>
         <nav className="flex-1 space-y-1 px-3">
           {visibleNav.map((item) => {
@@ -128,9 +125,8 @@ function AppLayout() {
 
       {/* Topbar (mobile) */}
       <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border bg-card/80 px-4 py-3 backdrop-blur md:hidden">
-        <div className="flex items-center gap-2">
-          <BrandLogo size={28} />
-          <span className="font-bold">ConectaAPAE</span>
+        <div className="flex items-center">
+          <BrandLogo size={32} />
         </div>
         <Button variant="ghost" size="icon" aria-label="Abrir menu" onClick={() => setOpen((v) => !v)}>
           <Menu className="h-5 w-5" />
