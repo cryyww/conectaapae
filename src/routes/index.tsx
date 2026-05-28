@@ -229,11 +229,8 @@ function PhoneMockup() {
       className="relative w-[300px] rounded-[2.5rem] border-[10px] border-foreground/90 bg-card p-4"
       style={{ boxShadow: "var(--shadow-card)" }}
     >
-      <div className="mb-3 flex items-center gap-2">
+      <div className="mb-3 flex items-center">
         <BrandLogo size={28} />
-        <div className="text-sm font-bold">
-          Conecta<span className="[color:var(--brand-yellow)]">APAE</span>
-        </div>
       </div>
       <div className="text-lg font-semibold">Olá, Ana! 👋</div>
       <div className="text-xs text-muted-foreground">Bem-vinda de volta!</div>
