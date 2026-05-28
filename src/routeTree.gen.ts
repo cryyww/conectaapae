@@ -9,38 +9,134 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LoginProfissionalRouteImport } from './routes/login_.profissional'
+import { Route as LoginFamiliaRouteImport } from './routes/login_.familia'
+import { Route as CadastroProfissionalRouteImport } from './routes/cadastro_.profissional'
+import { Route as CadastroFamiliaRouteImport } from './routes/cadastro_.familia'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginProfissionalRoute = LoginProfissionalRouteImport.update({
+  id: '/login_/profissional',
+  path: '/login/profissional',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginFamiliaRoute = LoginFamiliaRouteImport.update({
+  id: '/login_/familia',
+  path: '/login/familia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CadastroProfissionalRoute = CadastroProfissionalRouteImport.update({
+  id: '/cadastro_/profissional',
+  path: '/cadastro/profissional',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CadastroFamiliaRoute = CadastroFamiliaRouteImport.update({
+  id: '/cadastro_/familia',
+  path: '/cadastro/familia',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
+  '/login': typeof LoginRoute
+  '/cadastro/familia': typeof CadastroFamiliaRoute
+  '/cadastro/profissional': typeof CadastroProfissionalRoute
+  '/login/familia': typeof LoginFamiliaRoute
+  '/login/profissional': typeof LoginProfissionalRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
+  '/login': typeof LoginRoute
+  '/cadastro/familia': typeof CadastroFamiliaRoute
+  '/cadastro/profissional': typeof CadastroProfissionalRoute
+  '/login/familia': typeof LoginFamiliaRoute
+  '/login/profissional': typeof LoginProfissionalRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
+  '/login': typeof LoginRoute
+  '/cadastro_/familia': typeof CadastroFamiliaRoute
+  '/cadastro_/profissional': typeof CadastroProfissionalRoute
+  '/login_/familia': typeof LoginFamiliaRoute
+  '/login_/profissional': typeof LoginProfissionalRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/login'
+    | '/cadastro/familia'
+    | '/cadastro/profissional'
+    | '/login/familia'
+    | '/login/profissional'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/app'
+    | '/login'
+    | '/cadastro/familia'
+    | '/cadastro/profissional'
+    | '/login/familia'
+    | '/login/profissional'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/login'
+    | '/cadastro_/familia'
+    | '/cadastro_/profissional'
+    | '/login_/familia'
+    | '/login_/profissional'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRoute
+  LoginRoute: typeof LoginRoute
+  CadastroFamiliaRoute: typeof CadastroFamiliaRoute
+  CadastroProfissionalRoute: typeof CadastroProfissionalRoute
+  LoginFamiliaRoute: typeof LoginFamiliaRoute
+  LoginProfissionalRoute: typeof LoginProfissionalRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +144,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login_/profissional': {
+      id: '/login_/profissional'
+      path: '/login/profissional'
+      fullPath: '/login/profissional'
+      preLoaderRoute: typeof LoginProfissionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login_/familia': {
+      id: '/login_/familia'
+      path: '/login/familia'
+      fullPath: '/login/familia'
+      preLoaderRoute: typeof LoginFamiliaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cadastro_/profissional': {
+      id: '/cadastro_/profissional'
+      path: '/cadastro/profissional'
+      fullPath: '/cadastro/profissional'
+      preLoaderRoute: typeof CadastroProfissionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cadastro_/familia': {
+      id: '/cadastro_/familia'
+      path: '/cadastro/familia'
+      fullPath: '/cadastro/familia'
+      preLoaderRoute: typeof CadastroFamiliaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRoute,
+  LoginRoute: LoginRoute,
+  CadastroFamiliaRoute: CadastroFamiliaRoute,
+  CadastroProfissionalRoute: CadastroProfissionalRoute,
+  LoginFamiliaRoute: LoginFamiliaRoute,
+  LoginProfissionalRoute: LoginProfissionalRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
