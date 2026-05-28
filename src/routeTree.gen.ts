@@ -19,6 +19,7 @@ import { Route as CadastroProfissionalRouteImport } from './routes/cadastro_.pro
 import { Route as CadastroFamiliaRouteImport } from './routes/cadastro_.familia'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
 import { Route as AppMensagensRouteImport } from './routes/app.mensagens'
+import { Route as AppConversasRouteImport } from './routes/app.conversas'
 import { Route as AppAgendaRouteImport } from './routes/app.agenda'
 import { Route as AppAssistidosIndexRouteImport } from './routes/app.assistidos.index'
 import { Route as AppAssistidosIdRouteImport } from './routes/app.assistidos.$id'
@@ -73,6 +74,11 @@ const AppMensagensRoute = AppMensagensRouteImport.update({
   path: '/mensagens',
   getParentRoute: () => AppRoute,
 } as any)
+const AppConversasRoute = AppConversasRouteImport.update({
+  id: '/conversas',
+  path: '/conversas',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAgendaRoute = AppAgendaRouteImport.update({
   id: '/agenda',
   path: '/agenda',
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/login': typeof LoginRoute
   '/app/agenda': typeof AppAgendaRoute
+  '/app/conversas': typeof AppConversasRoute
   '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
   '/cadastro/familia': typeof CadastroFamiliaRoute
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/app/agenda': typeof AppAgendaRoute
+  '/app/conversas': typeof AppConversasRoute
   '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
   '/cadastro/familia': typeof CadastroFamiliaRoute
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/login': typeof LoginRoute
   '/app/agenda': typeof AppAgendaRoute
+  '/app/conversas': typeof AppConversasRoute
   '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
   '/cadastro_/familia': typeof CadastroFamiliaRoute
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/login'
     | '/app/agenda'
+    | '/app/conversas'
     | '/app/mensagens'
     | '/app/perfil'
     | '/cadastro/familia'
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/app/agenda'
+    | '/app/conversas'
     | '/app/mensagens'
     | '/app/perfil'
     | '/cadastro/familia'
@@ -170,6 +181,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/login'
     | '/app/agenda'
+    | '/app/conversas'
     | '/app/mensagens'
     | '/app/perfil'
     | '/cadastro_/familia'
@@ -263,6 +275,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMensagensRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/conversas': {
+      id: '/app/conversas'
+      path: '/conversas'
+      fullPath: '/app/conversas'
+      preLoaderRoute: typeof AppConversasRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/agenda': {
       id: '/app/agenda'
       path: '/agenda'
@@ -289,6 +308,7 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppAgendaRoute: typeof AppAgendaRoute
+  AppConversasRoute: typeof AppConversasRoute
   AppMensagensRoute: typeof AppMensagensRoute
   AppPerfilRoute: typeof AppPerfilRoute
   AppIndexRoute: typeof AppIndexRoute
@@ -298,6 +318,7 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAgendaRoute: AppAgendaRoute,
+  AppConversasRoute: AppConversasRoute,
   AppMensagensRoute: AppMensagensRoute,
   AppPerfilRoute: AppPerfilRoute,
   AppIndexRoute: AppIndexRoute,

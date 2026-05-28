@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Home, Users, CalendarDays, MessageCircle, UserCircle2, LogOut, Loader2, Menu } from "lucide-react";
+import { Home, Users, CalendarDays, MessageCircle, UserCircle2, LogOut, Loader2, Menu, MessagesSquare } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { BrandLogo } from "@/components/BrandLogo";
@@ -12,12 +12,15 @@ export const Route = createFileRoute("/app")({
   component: AppLayout,
 });
 
-type NavItem = { to: string; label: string; icon: typeof Home; exact?: boolean };
+type Role = "assistido" | "profissional" | "admin";
+type NavItem = { to: string; label: string; icon: typeof Home; exact?: boolean; roles?: Role[] };
+
 const NAV: NavItem[] = [
   { to: "/app", label: "Início", icon: Home, exact: true },
-  { to: "/app/assistidos", label: "Assistidos", icon: Users },
+  { to: "/app/assistidos", label: "Assistidos", icon: Users, roles: ["profissional", "admin"] },
   { to: "/app/agenda", label: "Agenda", icon: CalendarDays },
-  { to: "/app/mensagens", label: "Mensagens", icon: MessageCircle },
+  { to: "/app/conversas", label: "Conversas", icon: MessagesSquare },
+  { to: "/app/mensagens", label: "Comunicados", icon: MessageCircle },
   { to: "/app/perfil", label: "Perfil", icon: UserCircle2 },
 ];
 
@@ -25,6 +28,7 @@ function AppLayout() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState<string>("");
+  const [role, setRole] = useState<Role | null>(null);
   const [open, setOpen] = useState(false);
   const path = useRouterState({ select: (s) => s.location.pathname });
 
@@ -38,16 +42,24 @@ function AppLayout() {
         navigate({ to: "/login" });
         return;
       }
-      const { data: prof } = await supabase
-        .from("profiles")
-        .select("nome_completo")
-        .eq("id", session.user.id)
-        .maybeSingle();
+      const [{ data: prof }, { data: roleRow }] = await Promise.all([
+        supabase.from("profiles").select("nome_completo").eq("id", session.user.id).maybeSingle(),
+        supabase.from("user_roles").select("role").eq("user_id", session.user.id).maybeSingle(),
+      ]);
       setName((prof?.nome_completo as string) || session.user.email || "Usuário");
+      setRole((roleRow?.role as Role) ?? "assistido");
       setLoading(false);
     })();
     return () => subscription.unsubscribe();
   }, [navigate]);
+
+  // Guard: bloqueia famílias na rota de assistidos
+  useEffect(() => {
+    if (!loading && role && role === "assistido" && path.startsWith("/app/assistidos")) {
+      toast.error("Esta área é exclusiva para profissionais");
+      navigate({ to: "/app" });
+    }
+  }, [loading, role, path, navigate]);
 
   async function handleLogout() {
     await supabase.auth.signOut();
@@ -63,6 +75,7 @@ function AppLayout() {
     );
   }
 
+  const visibleNav = NAV.filter((i) => !i.roles || (role && i.roles.includes(role)));
   const isActive = (to: string, exact?: boolean) =>
     exact ? path === to : path === to || path.startsWith(to + "/");
 
@@ -77,7 +90,7 @@ function AppLayout() {
           </span>
         </div>
         <nav className="flex-1 space-y-1 px-3">
-          {NAV.map((item) => {
+          {visibleNav.map((item) => {
             const active = isActive(item.to, item.exact);
             const Icon = item.icon;
             return (
@@ -98,7 +111,10 @@ function AppLayout() {
           })}
         </nav>
         <div className="border-t border-sidebar-border p-4">
-          <div className="mb-3 truncate text-sm text-sidebar-foreground/80">{name}</div>
+          <div className="mb-1 truncate text-sm font-semibold">{name}</div>
+          <div className="mb-3 text-xs text-sidebar-foreground/70">
+            {role === "profissional" ? "Profissional" : role === "admin" ? "Administrador" : "Família"}
+          </div>
           <Button
             variant="outline"
             size="sm"
@@ -123,7 +139,7 @@ function AppLayout() {
       {open && (
         <div className="sticky top-[57px] z-30 border-b border-border bg-sidebar text-sidebar-foreground md:hidden">
           <nav className="grid gap-1 p-3">
-            {NAV.map((item) => {
+            {visibleNav.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.to, item.exact);
               return (
