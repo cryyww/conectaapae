@@ -212,9 +212,9 @@ function Landing() {
 
       <footer className="border-t border-border py-8">
         <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 text-sm text-muted-foreground md:flex-row">
-          <div className="flex items-center gap-2">
-            <BrandLogo size={24} />
-            <span>© {new Date().getFullYear()} ConectaAPAE</span>
+          <div className="flex items-center gap-3">
+            <BrandLogo size={32} />
+            <span>© {new Date().getFullYear()}</span>
           </div>
           <span>Feito com cuidado para promover inclusão.</span>
         </div>
