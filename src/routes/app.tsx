@@ -1,32 +1,31 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LogOut, Loader2 } from "lucide-react";
+import { Home, Users, CalendarDays, MessageCircle, UserCircle2, LogOut, Loader2, Menu } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { BrandLogo } from "@/components/BrandLogo";
 import { supabase } from "@/integrations/supabase/client";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/app")({
-  head: () => ({ meta: [{ title: "Minha área — ConectaAPAE" }] }),
-  component: AppHome,
+  head: () => ({ meta: [{ title: "ConectaAPAE" }] }),
+  component: AppLayout,
 });
 
-type Profile = {
-  nome_completo: string;
-  email: string;
-  telefone: string | null;
-  data_nascimento: string | null;
-  nome_assistido: string | null;
-  parentesco: string | null;
-  registro_profissional: string | null;
-  especialidade: string | null;
-};
+const NAV = [
+  { to: "/app", label: "Início", icon: Home, exact: true },
+  { to: "/app/assistidos", label: "Assistidos", icon: Users },
+  { to: "/app/agenda", label: "Agenda", icon: CalendarDays },
+  { to: "/app/mensagens", label: "Mensagens", icon: MessageCircle },
+  { to: "/app/perfil", label: "Perfil", icon: UserCircle2 },
+] as const;
 
-function AppHome() {
+function AppLayout() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [role, setRole] = useState<string | null>(null);
+  const [name, setName] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const path = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
@@ -38,12 +37,12 @@ function AppHome() {
         navigate({ to: "/login" });
         return;
       }
-      const [{ data: prof }, { data: roles }] = await Promise.all([
-        supabase.from("profiles").select("*").eq("id", session.user.id).maybeSingle(),
-        supabase.from("user_roles").select("role").eq("user_id", session.user.id).maybeSingle(),
-      ]);
-      setProfile(prof as Profile | null);
-      setRole(roles?.role ?? null);
+      const { data: prof } = await supabase
+        .from("profiles")
+        .select("nome_completo")
+        .eq("id", session.user.id)
+        .maybeSingle();
+      setName((prof?.nome_completo as string) || session.user.email || "Usuário");
       setLoading(false);
     })();
     return () => subscription.unsubscribe();
@@ -63,59 +62,97 @@ function AppHome() {
     );
   }
 
+  const isActive = (to: string, exact?: boolean) =>
+    exact ? path === to : path === to || path.startsWith(to + "/");
+
   return (
-    <div className="min-h-screen" style={{ background: "var(--gradient-hero)" }}>
-      <header className="border-b border-border bg-card/60 backdrop-blur">
-        <div className="container mx-auto flex items-center justify-between px-4 py-4">
-          <div className="flex items-center gap-3">
-            <BrandLogo size={32} />
-            <span className="font-bold">ConectaAPAE</span>
-          </div>
-          <Button variant="outline" size="sm" onClick={handleLogout}>
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Sidebar (desktop) */}
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-border bg-sidebar text-sidebar-foreground md:flex">
+        <div className="flex items-center gap-3 px-6 py-6">
+          <BrandLogo size={36} />
+          <span className="text-lg font-bold">
+            Conecta<span className="[color:var(--brand-yellow)]">APAE</span>
+          </span>
+        </div>
+        <nav className="flex-1 space-y-1 px-3">
+          {NAV.map((item) => {
+            const active = isActive(item.to, item.exact);
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={cn(
+                  "flex items-center gap-3 rounded-2xl px-4 py-3 text-base font-semibold transition",
+                  active
+                    ? "bg-[color:var(--brand-yellow)] text-[color:var(--brand-navy)]"
+                    : "text-sidebar-foreground/85 hover:bg-sidebar-accent",
+                )}
+              >
+                <Icon className="h-5 w-5" />
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+        <div className="border-t border-sidebar-border p-4">
+          <div className="mb-3 truncate text-sm text-sidebar-foreground/80">{name}</div>
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full rounded-full bg-transparent text-sidebar-foreground hover:bg-sidebar-accent"
+            onClick={handleLogout}
+          >
             <LogOut className="mr-2 h-4 w-4" /> Sair
           </Button>
         </div>
+      </aside>
+
+      {/* Topbar (mobile) */}
+      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border bg-card/80 px-4 py-3 backdrop-blur md:hidden">
+        <div className="flex items-center gap-2">
+          <BrandLogo size={28} />
+          <span className="font-bold">ConectaAPAE</span>
+        </div>
+        <Button variant="ghost" size="icon" aria-label="Abrir menu" onClick={() => setOpen((v) => !v)}>
+          <Menu className="h-5 w-5" />
+        </Button>
       </header>
+      {open && (
+        <div className="sticky top-[57px] z-30 border-b border-border bg-sidebar text-sidebar-foreground md:hidden">
+          <nav className="grid gap-1 p-3">
+            {NAV.map((item) => {
+              const Icon = item.icon;
+              const active = isActive(item.to, item.exact);
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    "flex items-center gap-3 rounded-xl px-3 py-3 text-base font-semibold",
+                    active
+                      ? "bg-[color:var(--brand-yellow)] text-[color:var(--brand-navy)]"
+                      : "hover:bg-sidebar-accent",
+                  )}
+                >
+                  <Icon className="h-5 w-5" /> {item.label}
+                </Link>
+              );
+            })}
+            <Button variant="outline" size="sm" className="mt-2 rounded-full bg-transparent text-sidebar-foreground" onClick={handleLogout}>
+              <LogOut className="mr-2 h-4 w-4" /> Sair
+            </Button>
+          </nav>
+        </div>
+      )}
 
-      <main className="container mx-auto max-w-3xl px-4 py-10">
-        <div className="rounded-3xl border border-border bg-card p-8" style={{ boxShadow: "var(--shadow-card)" }}>
-          <p className="text-sm text-muted-foreground">Bem-vindo(a)</p>
-          <h1 className="mt-1 text-3xl font-bold">{profile?.nome_completo}</h1>
-          <span
-            className="mt-3 inline-block rounded-full px-3 py-1 text-xs font-semibold uppercase"
-            style={{ background: "var(--brand-yellow)", color: "var(--brand-navy)" }}
-          >
-            {role === "profissional" ? "Profissional" : role === "admin" ? "Administrador" : "Família / Assistido"}
-          </span>
-
-          <dl className="mt-8 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
-            <Field label="E-mail" value={profile?.email} />
-            <Field label="Telefone" value={profile?.telefone} />
-            <Field label="Data de nascimento" value={profile?.data_nascimento} />
-            {role === "assistido" && (
-              <>
-                <Field label="Nome do assistido" value={profile?.nome_assistido} />
-                <Field label="Parentesco" value={profile?.parentesco} />
-              </>
-            )}
-            {role === "profissional" && (
-              <>
-                <Field label="Registro profissional" value={profile?.registro_profissional} />
-                <Field label="Especialidade" value={profile?.especialidade} />
-              </>
-            )}
-          </dl>
+      <main className="md:pl-64">
+        <div className="mx-auto max-w-6xl px-4 py-8 md:px-8 md:py-10">
+          <Outlet />
         </div>
       </main>
-    </div>
-  );
-}
-
-function Field({ label, value }: { label: string; value?: string | null }) {
-  return (
-    <div className="rounded-xl bg-muted/40 px-4 py-3">
-      <dt className="text-xs font-medium text-muted-foreground">{label}</dt>
-      <dd className="mt-1 font-medium">{value || "—"}</dd>
     </div>
   );
 }
