@@ -18,6 +18,7 @@ import { Route as LoginFamiliaRouteImport } from './routes/login_.familia'
 import { Route as CadastroProfissionalRouteImport } from './routes/cadastro_.profissional'
 import { Route as CadastroFamiliaRouteImport } from './routes/cadastro_.familia'
 import { Route as AppAssistidosIndexRouteImport } from './routes/app.assistidos.index'
+import { Route as AppAssistidosIdRouteImport } from './routes/app.assistidos.$id'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -64,6 +65,11 @@ const AppAssistidosIndexRoute = AppAssistidosIndexRouteImport.update({
   path: '/assistidos/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAssistidosIdRoute = AppAssistidosIdRouteImport.update({
+  id: '/assistidos/$id',
+  path: '/assistidos/$id',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/login/familia': typeof LoginFamiliaRoute
   '/login/profissional': typeof LoginProfissionalRoute
   '/app/': typeof AppIndexRoute
+  '/app/assistidos/$id': typeof AppAssistidosIdRoute
   '/app/assistidos/': typeof AppAssistidosIndexRoute
 }
 export interface FileRoutesByTo {
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/login/familia': typeof LoginFamiliaRoute
   '/login/profissional': typeof LoginProfissionalRoute
   '/app': typeof AppIndexRoute
+  '/app/assistidos/$id': typeof AppAssistidosIdRoute
   '/app/assistidos': typeof AppAssistidosIndexRoute
 }
 export interface FileRoutesById {
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/login_/familia': typeof LoginFamiliaRoute
   '/login_/profissional': typeof LoginProfissionalRoute
   '/app/': typeof AppIndexRoute
+  '/app/assistidos/$id': typeof AppAssistidosIdRoute
   '/app/assistidos/': typeof AppAssistidosIndexRoute
 }
 export interface FileRouteTypes {
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/login/familia'
     | '/login/profissional'
     | '/app/'
+    | '/app/assistidos/$id'
     | '/app/assistidos/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/login/familia'
     | '/login/profissional'
     | '/app'
+    | '/app/assistidos/$id'
     | '/app/assistidos'
   id:
     | '__root__'
@@ -130,6 +141,7 @@ export interface FileRouteTypes {
     | '/login_/familia'
     | '/login_/profissional'
     | '/app/'
+    | '/app/assistidos/$id'
     | '/app/assistidos/'
   fileRoutesById: FileRoutesById
 }
@@ -208,16 +220,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAssistidosIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/assistidos/$id': {
+      id: '/app/assistidos/$id'
+      path: '/assistidos/$id'
+      fullPath: '/app/assistidos/$id'
+      preLoaderRoute: typeof AppAssistidosIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
+  AppAssistidosIdRoute: typeof AppAssistidosIdRoute
   AppAssistidosIndexRoute: typeof AppAssistidosIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppIndexRoute: AppIndexRoute,
+  AppAssistidosIdRoute: AppAssistidosIdRoute,
   AppAssistidosIndexRoute: AppAssistidosIndexRoute,
 }
 
@@ -235,3 +256,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
