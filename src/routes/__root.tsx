@@ -7,6 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
 
@@ -73,13 +74,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { name: "description", content: "ConectaAPAE digitizes, schedules, and streamlines communication for APAE institutions." },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:description", content: "ConectaAPAE digitizes, schedules, and streamlines communication for APAE institutions." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Lovable App" },
+      { name: "twitter:description", content: "ConectaAPAE digitizes, schedules, and streamlines communication for APAE institutions." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/43b55866-0d59-4ea1-acd2-915473bb7f9c/id-preview-0a7af11e--35284f34-1c91-47fe-9856-ae57070c92a6.lovable.app-1779936138829.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/43b55866-0d59-4ea1-acd2-915473bb7f9c/id-preview-0a7af11e--35284f34-1c91-47fe-9856-ae57070c92a6.lovable.app-1779936138829.png" },
     ],
     links: [
       {
@@ -115,6 +120,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );
 }

@@ -9,38 +9,204 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as LoginProfissionalRouteImport } from './routes/login_.profissional'
+import { Route as LoginFamiliaRouteImport } from './routes/login_.familia'
+import { Route as CadastroProfissionalRouteImport } from './routes/cadastro_.profissional'
+import { Route as CadastroFamiliaRouteImport } from './routes/cadastro_.familia'
+import { Route as AppPerfilRouteImport } from './routes/app.perfil'
+import { Route as AppMensagensRouteImport } from './routes/app.mensagens'
+import { Route as AppAgendaRouteImport } from './routes/app.agenda'
+import { Route as AppAssistidosIndexRouteImport } from './routes/app.assistidos.index'
+import { Route as AppAssistidosIdRouteImport } from './routes/app.assistidos.$id'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const LoginProfissionalRoute = LoginProfissionalRouteImport.update({
+  id: '/login_/profissional',
+  path: '/login/profissional',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginFamiliaRoute = LoginFamiliaRouteImport.update({
+  id: '/login_/familia',
+  path: '/login/familia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CadastroProfissionalRoute = CadastroProfissionalRouteImport.update({
+  id: '/cadastro_/profissional',
+  path: '/cadastro/profissional',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CadastroFamiliaRoute = CadastroFamiliaRouteImport.update({
+  id: '/cadastro_/familia',
+  path: '/cadastro/familia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppPerfilRoute = AppPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMensagensRoute = AppMensagensRouteImport.update({
+  id: '/mensagens',
+  path: '/mensagens',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAgendaRoute = AppAgendaRouteImport.update({
+  id: '/agenda',
+  path: '/agenda',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssistidosIndexRoute = AppAssistidosIndexRouteImport.update({
+  id: '/assistidos/',
+  path: '/assistidos/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssistidosIdRoute = AppAssistidosIdRouteImport.update({
+  id: '/assistidos/$id',
+  path: '/assistidos/$id',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/login': typeof LoginRoute
+  '/app/agenda': typeof AppAgendaRoute
+  '/app/mensagens': typeof AppMensagensRoute
+  '/app/perfil': typeof AppPerfilRoute
+  '/cadastro/familia': typeof CadastroFamiliaRoute
+  '/cadastro/profissional': typeof CadastroProfissionalRoute
+  '/login/familia': typeof LoginFamiliaRoute
+  '/login/profissional': typeof LoginProfissionalRoute
+  '/app/': typeof AppIndexRoute
+  '/app/assistidos/$id': typeof AppAssistidosIdRoute
+  '/app/assistidos/': typeof AppAssistidosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/app/agenda': typeof AppAgendaRoute
+  '/app/mensagens': typeof AppMensagensRoute
+  '/app/perfil': typeof AppPerfilRoute
+  '/cadastro/familia': typeof CadastroFamiliaRoute
+  '/cadastro/profissional': typeof CadastroProfissionalRoute
+  '/login/familia': typeof LoginFamiliaRoute
+  '/login/profissional': typeof LoginProfissionalRoute
+  '/app': typeof AppIndexRoute
+  '/app/assistidos/$id': typeof AppAssistidosIdRoute
+  '/app/assistidos': typeof AppAssistidosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/login': typeof LoginRoute
+  '/app/agenda': typeof AppAgendaRoute
+  '/app/mensagens': typeof AppMensagensRoute
+  '/app/perfil': typeof AppPerfilRoute
+  '/cadastro_/familia': typeof CadastroFamiliaRoute
+  '/cadastro_/profissional': typeof CadastroProfissionalRoute
+  '/login_/familia': typeof LoginFamiliaRoute
+  '/login_/profissional': typeof LoginProfissionalRoute
+  '/app/': typeof AppIndexRoute
+  '/app/assistidos/$id': typeof AppAssistidosIdRoute
+  '/app/assistidos/': typeof AppAssistidosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/login'
+    | '/app/agenda'
+    | '/app/mensagens'
+    | '/app/perfil'
+    | '/cadastro/familia'
+    | '/cadastro/profissional'
+    | '/login/familia'
+    | '/login/profissional'
+    | '/app/'
+    | '/app/assistidos/$id'
+    | '/app/assistidos/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/app/agenda'
+    | '/app/mensagens'
+    | '/app/perfil'
+    | '/cadastro/familia'
+    | '/cadastro/profissional'
+    | '/login/familia'
+    | '/login/profissional'
+    | '/app'
+    | '/app/assistidos/$id'
+    | '/app/assistidos'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/login'
+    | '/app/agenda'
+    | '/app/mensagens'
+    | '/app/perfil'
+    | '/cadastro_/familia'
+    | '/cadastro_/profissional'
+    | '/login_/familia'
+    | '/login_/profissional'
+    | '/app/'
+    | '/app/assistidos/$id'
+    | '/app/assistidos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  CadastroFamiliaRoute: typeof CadastroFamiliaRoute
+  CadastroProfissionalRoute: typeof CadastroProfissionalRoute
+  LoginFamiliaRoute: typeof LoginFamiliaRoute
+  LoginProfissionalRoute: typeof LoginProfissionalRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +214,108 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/login_/profissional': {
+      id: '/login_/profissional'
+      path: '/login/profissional'
+      fullPath: '/login/profissional'
+      preLoaderRoute: typeof LoginProfissionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login_/familia': {
+      id: '/login_/familia'
+      path: '/login/familia'
+      fullPath: '/login/familia'
+      preLoaderRoute: typeof LoginFamiliaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cadastro_/profissional': {
+      id: '/cadastro_/profissional'
+      path: '/cadastro/profissional'
+      fullPath: '/cadastro/profissional'
+      preLoaderRoute: typeof CadastroProfissionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cadastro_/familia': {
+      id: '/cadastro_/familia'
+      path: '/cadastro/familia'
+      fullPath: '/cadastro/familia'
+      preLoaderRoute: typeof CadastroFamiliaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/perfil': {
+      id: '/app/perfil'
+      path: '/perfil'
+      fullPath: '/app/perfil'
+      preLoaderRoute: typeof AppPerfilRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/mensagens': {
+      id: '/app/mensagens'
+      path: '/mensagens'
+      fullPath: '/app/mensagens'
+      preLoaderRoute: typeof AppMensagensRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/agenda': {
+      id: '/app/agenda'
+      path: '/agenda'
+      fullPath: '/app/agenda'
+      preLoaderRoute: typeof AppAgendaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/assistidos/': {
+      id: '/app/assistidos/'
+      path: '/assistidos'
+      fullPath: '/app/assistidos/'
+      preLoaderRoute: typeof AppAssistidosIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/assistidos/$id': {
+      id: '/app/assistidos/$id'
+      path: '/assistidos/$id'
+      fullPath: '/app/assistidos/$id'
+      preLoaderRoute: typeof AppAssistidosIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAgendaRoute: typeof AppAgendaRoute
+  AppMensagensRoute: typeof AppMensagensRoute
+  AppPerfilRoute: typeof AppPerfilRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppAssistidosIdRoute: typeof AppAssistidosIdRoute
+  AppAssistidosIndexRoute: typeof AppAssistidosIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAgendaRoute: AppAgendaRoute,
+  AppMensagensRoute: AppMensagensRoute,
+  AppPerfilRoute: AppPerfilRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppAssistidosIdRoute: AppAssistidosIdRoute,
+  AppAssistidosIndexRoute: AppAssistidosIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  LoginRoute: LoginRoute,
+  CadastroFamiliaRoute: CadastroFamiliaRoute,
+  CadastroProfissionalRoute: CadastroProfissionalRoute,
+  LoginFamiliaRoute: LoginFamiliaRoute,
+  LoginProfissionalRoute: LoginProfissionalRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
