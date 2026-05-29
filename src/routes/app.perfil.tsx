@@ -15,6 +15,7 @@ type Profile = {
   email: string;
   telefone: string | null;
   data_nascimento: string | null;
+  cidade: string | null;
   nome_assistido: string | null;
   parentesco: string | null;
   registro_profissional: string | null;
