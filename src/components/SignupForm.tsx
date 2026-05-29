@@ -126,6 +126,13 @@ export function SignupForm({ role, title, subtitle, accent, loginPath }: Props) 
               </div>
             </div>
 
+            <div className="space-y-2">
+              <Label htmlFor="cidade">Cidade *</Label>
+              <Input id="cidade" required value={form.cidade} onChange={set("cidade")} placeholder="Ex.: São Paulo - SP" />
+            </div>
+
+
+
             {role === "assistido" && (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
