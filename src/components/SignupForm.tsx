@@ -77,6 +77,7 @@ export function SignupForm({ role, title, subtitle, accent, loginPath }: Props) 
           nome_completo: form.nome_completo,
           telefone: form.telefone,
           data_nascimento: form.data_nascimento,
+          cidade: form.cidade,
           nome_assistido: role === "assistido" ? form.nome_assistido : null,
           parentesco: role === "assistido" ? form.parentesco : null,
           registro_profissional: role === "profissional" ? form.registro_profissional : null,
