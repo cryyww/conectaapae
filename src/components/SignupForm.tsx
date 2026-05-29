@@ -24,6 +24,7 @@ const baseSchema = z.object({
   email: z.string().trim().email("E-mail inválido").max(255),
   telefone: z.string().trim().max(20).optional().or(z.literal("")),
   data_nascimento: z.string().optional().or(z.literal("")),
+  cidade: z.string().trim().min(2, "Informe sua cidade").max(80),
   senha: z.string().min(8, "Mínimo de 8 caracteres").max(72),
 });
 
@@ -45,6 +46,7 @@ export function SignupForm({ role, title, subtitle, accent, loginPath }: Props) 
     email: "",
     telefone: "",
     data_nascimento: "",
+    cidade: "",
     senha: "",
     nome_assistido: "",
     parentesco: "",
@@ -75,6 +77,7 @@ export function SignupForm({ role, title, subtitle, accent, loginPath }: Props) 
           nome_completo: form.nome_completo,
           telefone: form.telefone,
           data_nascimento: form.data_nascimento,
+          cidade: form.cidade,
           nome_assistido: role === "assistido" ? form.nome_assistido : null,
           parentesco: role === "assistido" ? form.parentesco : null,
           registro_profissional: role === "profissional" ? form.registro_profissional : null,
@@ -122,6 +125,13 @@ export function SignupForm({ role, title, subtitle, accent, loginPath }: Props) 
                 <Input id="data_nascimento" type="date" value={form.data_nascimento} onChange={set("data_nascimento")} />
               </div>
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="cidade">Cidade *</Label>
+              <Input id="cidade" required value={form.cidade} onChange={set("cidade")} placeholder="Ex.: São Paulo - SP" />
+            </div>
+
+
 
             {role === "assistido" && (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

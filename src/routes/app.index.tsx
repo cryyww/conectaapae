@@ -9,10 +9,10 @@ export const Route = createFileRoute("/app/")({
 });
 
 const METRICS = [
-  { label: "Assistidos", value: 128, icon: Users, hint: "+4 esta semana" },
-  { label: "Atividades de hoje", value: 23, icon: CalendarCheck2, hint: "8 concluídas" },
-  { label: "Novos comunicados", value: 6, icon: Bell, hint: "2 não lidos" },
-  { label: "Próximos atendimentos", value: 12, icon: ClipboardList, hint: "Hoje e amanhã" },
+  { label: "Assistidos", value: 128, icon: Users, hint: "+4 esta semana", to: "/app/assistidos" as const },
+  { label: "Atividades de hoje", value: 23, icon: CalendarCheck2, hint: "8 concluídas", to: "/app/agenda" as const },
+  { label: "Novos comunicados", value: 6, icon: Bell, hint: "2 não lidos", to: "/app/mensagens" as const },
+  { label: "Próximos atendimentos", value: 12, icon: ClipboardList, hint: "Hoje e amanhã", to: "/app/agenda" as const },
 ];
 
 const PROGRESS = [
@@ -46,8 +46,13 @@ function InicioProfissional() {
       </header>
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {METRICS.map(({ label, value, icon: Icon, hint }) => (
-          <div key={label} className="rounded-3xl border border-border bg-card p-5" style={{ boxShadow: "var(--shadow-card)" }}>
+        {METRICS.map(({ label, value, icon: Icon, hint, to }) => (
+          <Link
+            key={label}
+            to={to}
+            className="group rounded-3xl border border-border bg-card p-5 transition hover:border-[color:var(--brand-navy)]"
+            style={{ boxShadow: "var(--shadow-card)" }}
+          >
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-muted-foreground">{label}</span>
               <span className="grid h-10 w-10 place-items-center rounded-2xl [background:var(--brand-yellow-soft)] [color:var(--brand-navy)]">
@@ -56,7 +61,7 @@ function InicioProfissional() {
             </div>
             <div className="mt-4 text-3xl font-bold">{value}</div>
             <p className="mt-1 text-xs text-muted-foreground">{hint}</p>
-          </div>
+          </Link>
         ))}
       </section>
 
