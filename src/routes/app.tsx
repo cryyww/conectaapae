@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Home, Users, CalendarDays, MessageCircle, UserCircle2, LogOut, Loader2, Menu, MessagesSquare } from "lucide-react";
+import { Home, Users, CalendarDays, MessageCircle, UserCircle2, LogOut, Loader2, Menu, MessagesSquare, Bell } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { BrandLogo } from "@/components/BrandLogo";
@@ -20,7 +20,8 @@ const NAV: NavItem[] = [
   { to: "/app/assistidos", label: "Assistidos", icon: Users, roles: ["profissional", "admin"] },
   { to: "/app/agenda", label: "Agenda", icon: CalendarDays },
   { to: "/app/conversas", label: "Conversas", icon: MessagesSquare },
-  { to: "/app/mensagens", label: "Comunicados", icon: MessageCircle },
+  { to: "/app/mensagens", label: "Comunicados", icon: MessageCircle, roles: ["profissional", "admin"] },
+  { to: "/app/atualizacoes", label: "Atualizações", icon: Bell, roles: ["assistido"] },
   { to: "/app/perfil", label: "Perfil", icon: UserCircle2 },
 ];
 
