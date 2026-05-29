@@ -46,6 +46,7 @@ export function SignupForm({ role, title, subtitle, accent, loginPath }: Props) 
     email: "",
     telefone: "",
     data_nascimento: "",
+    cidade: "",
     senha: "",
     nome_assistido: "",
     parentesco: "",
