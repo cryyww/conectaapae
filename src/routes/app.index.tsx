@@ -9,10 +9,10 @@ export const Route = createFileRoute("/app/")({
 });
 
 const METRICS = [
-  { label: "Assistidos", value: 128, icon: Users, hint: "+4 esta semana" },
-  { label: "Atividades de hoje", value: 23, icon: CalendarCheck2, hint: "8 concluídas" },
-  { label: "Novos comunicados", value: 6, icon: Bell, hint: "2 não lidos" },
-  { label: "Próximos atendimentos", value: 12, icon: ClipboardList, hint: "Hoje e amanhã" },
+  { label: "Assistidos", value: 128, icon: Users, hint: "+4 esta semana", to: "/app/assistidos" as const },
+  { label: "Atividades de hoje", value: 23, icon: CalendarCheck2, hint: "8 concluídas", to: "/app/agenda" as const },
+  { label: "Novos comunicados", value: 6, icon: Bell, hint: "2 não lidos", to: "/app/mensagens" as const },
+  { label: "Próximos atendimentos", value: 12, icon: ClipboardList, hint: "Hoje e amanhã", to: "/app/agenda" as const },
 ];
 
 const PROGRESS = [
