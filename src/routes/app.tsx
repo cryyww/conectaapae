@@ -54,9 +54,9 @@ function AppLayout() {
     return () => subscription.unsubscribe();
   }, [navigate]);
 
-  // Guard: bloqueia famílias na rota de assistidos
+  // Guard: bloqueia famílias em áreas exclusivas dos profissionais
   useEffect(() => {
-    if (!loading && role && role === "assistido" && path.startsWith("/app/assistidos")) {
+    if (!loading && role === "assistido" && (path.startsWith("/app/assistidos") || path.startsWith("/app/mensagens"))) {
       toast.error("Esta área é exclusiva para profissionais");
       navigate({ to: "/app" });
     }
