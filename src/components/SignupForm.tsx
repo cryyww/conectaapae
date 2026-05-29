@@ -24,6 +24,7 @@ const baseSchema = z.object({
   email: z.string().trim().email("E-mail inválido").max(255),
   telefone: z.string().trim().max(20).optional().or(z.literal("")),
   data_nascimento: z.string().optional().or(z.literal("")),
+  cidade: z.string().trim().min(2, "Informe sua cidade").max(80),
   senha: z.string().min(8, "Mínimo de 8 caracteres").max(72),
 });
 
