@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Users, CalendarCheck2, Bell, ClipboardList, TrendingUp, ArrowRight } from "lucide-react";
+import { Users, CalendarCheck2, Bell, ClipboardList, TrendingUp, ArrowRight, MessagesSquare, Heart } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { useRole } from "@/hooks/use-role";
 
 export const Route = createFileRoute("/app/")({
   head: () => ({ meta: [{ title: "Início — ConectaAPAE" }] }),
@@ -15,9 +16,9 @@ const METRICS = [
 ];
 
 const PROGRESS = [
-  { label: "Frequência", value: 86, color: "var(--brand-navy)" },
-  { label: "Atividades concluídas", value: 72, color: "var(--brand-yellow)" },
-  { label: "Engajamento das famílias", value: 64, color: "var(--brand-navy)" },
+  { label: "Frequência", value: 86 },
+  { label: "Atividades concluídas", value: 72 },
+  { label: "Engajamento das famílias", value: 64 },
 ];
 
 const SCHEDULE = [
@@ -28,6 +29,12 @@ const SCHEDULE = [
 ];
 
 function Inicio() {
+  const { isProfissional, loading } = useRole();
+  if (loading) return null;
+  return isProfissional ? <InicioProfissional /> : <InicioFamilia />;
+}
+
+function InicioProfissional() {
   return (
     <div className="space-y-8">
       <header className="rounded-3xl border border-border bg-card p-6 md:p-8" style={{ background: "var(--gradient-hero)" }}>
@@ -95,6 +102,68 @@ function Inicio() {
             ))}
           </ul>
         </div>
+      </section>
+    </div>
+  );
+}
+
+function InicioFamilia() {
+  const quickLinks = [
+    { to: "/app/conversas", label: "Conversas", desc: "Fale com os profissionais", icon: MessagesSquare },
+    { to: "/app/agenda", label: "Agenda", desc: "Próximos atendimentos", icon: CalendarCheck2 },
+    { to: "/app/atualizacoes", label: "Atualizações", desc: "Rotinas, avisos e eventos", icon: Bell },
+    { to: "/app/perfil", label: "Perfil", desc: "Seus dados e do assistido", icon: Heart },
+  ];
+  return (
+    <div className="space-y-8">
+      <header className="rounded-3xl border border-border bg-card p-6 md:p-8" style={{ background: "var(--gradient-hero)" }}>
+        <p className="text-sm font-medium text-muted-foreground">Olá, família</p>
+        <h1 className="mt-1 text-3xl font-bold md:text-4xl">Acompanhe o dia da APAE</h1>
+        <p className="mt-2 max-w-2xl text-muted-foreground">
+          Veja as atualizações, fale com os profissionais e confira a agenda do(a) seu(sua) filho(a).
+        </p>
+      </header>
+
+      <section className="grid gap-4 sm:grid-cols-2">
+        {quickLinks.map(({ to, label, desc, icon: Icon }) => (
+          <Link
+            key={to}
+            to={to}
+            className="group flex items-center gap-4 rounded-3xl border border-border bg-card p-5 transition hover:border-[color:var(--brand-navy)]"
+            style={{ boxShadow: "var(--shadow-card)" }}
+          >
+            <span className="grid h-12 w-12 place-items-center rounded-2xl [background:var(--brand-yellow-soft)] [color:var(--brand-navy)]">
+              <Icon className="h-6 w-6" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="text-lg font-bold">{label}</div>
+              <div className="text-sm text-muted-foreground">{desc}</div>
+            </div>
+            <ArrowRight className="h-5 w-5 text-muted-foreground transition group-hover:translate-x-1" />
+          </Link>
+        ))}
+      </section>
+
+      <section className="rounded-3xl border border-border bg-card p-6" style={{ boxShadow: "var(--shadow-card)" }}>
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold">Próximos atendimentos</h2>
+          <Link to="/app/agenda" className="inline-flex items-center text-sm font-semibold [color:var(--brand-navy)]">
+            Ver agenda <ArrowRight className="ml-1 h-4 w-4" />
+          </Link>
+        </div>
+        <ul className="mt-4 space-y-3">
+          {SCHEDULE.slice(0, 3).map((s) => (
+            <li key={s.time} className="flex items-center gap-3 rounded-2xl bg-muted/40 px-3 py-3">
+              <div className="grid h-12 w-12 place-items-center rounded-2xl [background:var(--brand-navy)] text-sm font-bold text-primary-foreground">
+                {s.time}
+              </div>
+              <div className="min-w-0">
+                <div className="truncate font-semibold">{s.title}</div>
+                <div className="truncate text-sm text-muted-foreground">{s.prof}</div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </section>
     </div>
   );
