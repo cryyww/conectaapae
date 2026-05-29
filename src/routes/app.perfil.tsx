@@ -76,6 +76,7 @@ function Perfil() {
         <dl className="mt-8 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
           <Field label="E-mail" value={profile?.email} />
           <Field label="Telefone" value={profile?.telefone} />
+          <Field label="Cidade" value={profile?.cidade} />
           <Field label="Data de nascimento" value={profile?.data_nascimento} />
           {role === "assistido" && (
             <>
