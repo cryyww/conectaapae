@@ -20,6 +20,7 @@ import { Route as CadastroFamiliaRouteImport } from './routes/cadastro_.familia'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
 import { Route as AppMensagensRouteImport } from './routes/app.mensagens'
 import { Route as AppConversasRouteImport } from './routes/app.conversas'
+import { Route as AppAtualizacoesRouteImport } from './routes/app.atualizacoes'
 import { Route as AppAgendaRouteImport } from './routes/app.agenda'
 import { Route as AppAssistidosIndexRouteImport } from './routes/app.assistidos.index'
 import { Route as AppAssistidosIdRouteImport } from './routes/app.assistidos.$id'
@@ -79,6 +80,11 @@ const AppConversasRoute = AppConversasRouteImport.update({
   path: '/conversas',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAtualizacoesRoute = AppAtualizacoesRouteImport.update({
+  id: '/atualizacoes',
+  path: '/atualizacoes',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAgendaRoute = AppAgendaRouteImport.update({
   id: '/agenda',
   path: '/agenda',
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/login': typeof LoginRoute
   '/app/agenda': typeof AppAgendaRoute
+  '/app/atualizacoes': typeof AppAtualizacoesRoute
   '/app/conversas': typeof AppConversasRoute
   '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
@@ -115,6 +122,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/app/agenda': typeof AppAgendaRoute
+  '/app/atualizacoes': typeof AppAtualizacoesRoute
   '/app/conversas': typeof AppConversasRoute
   '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/login': typeof LoginRoute
   '/app/agenda': typeof AppAgendaRoute
+  '/app/atualizacoes': typeof AppAtualizacoesRoute
   '/app/conversas': typeof AppConversasRoute
   '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
@@ -150,6 +159,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/login'
     | '/app/agenda'
+    | '/app/atualizacoes'
     | '/app/conversas'
     | '/app/mensagens'
     | '/app/perfil'
@@ -165,6 +175,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/app/agenda'
+    | '/app/atualizacoes'
     | '/app/conversas'
     | '/app/mensagens'
     | '/app/perfil'
@@ -181,6 +192,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/login'
     | '/app/agenda'
+    | '/app/atualizacoes'
     | '/app/conversas'
     | '/app/mensagens'
     | '/app/perfil'
@@ -282,6 +294,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppConversasRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/atualizacoes': {
+      id: '/app/atualizacoes'
+      path: '/atualizacoes'
+      fullPath: '/app/atualizacoes'
+      preLoaderRoute: typeof AppAtualizacoesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/agenda': {
       id: '/app/agenda'
       path: '/agenda'
@@ -308,6 +327,7 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppAgendaRoute: typeof AppAgendaRoute
+  AppAtualizacoesRoute: typeof AppAtualizacoesRoute
   AppConversasRoute: typeof AppConversasRoute
   AppMensagensRoute: typeof AppMensagensRoute
   AppPerfilRoute: typeof AppPerfilRoute
@@ -318,6 +338,7 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAgendaRoute: AppAgendaRoute,
+  AppAtualizacoesRoute: AppAtualizacoesRoute,
   AppConversasRoute: AppConversasRoute,
   AppMensagensRoute: AppMensagensRoute,
   AppPerfilRoute: AppPerfilRoute,
@@ -340,13 +361,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
