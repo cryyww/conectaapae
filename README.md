@@ -1,76 +1,115 @@
-# 🌐 Conecta APAE
-
 <div align="center">
 
-[![Status do Projeto](https://img.shields.io/badge/Status-Em%20Desenvolvimento-brightgreen?style=for-the-badge)]()
-[![Tecnologias](https://img.shields.io/badge/Tecnologias-Web%20%2F%20FullStack-blue?style=for-the-badge)]()
-[![Licença](https://img.shields.io/badge/Licença-MIT-orange?style=for-the-badge)]()
+# 🌐 ConectaAPAE
 
-*Transformando inclusão social em acessibilidade digital: aproximando a comunidade da APAE através da tecnologia.*
+**Cuidado, família e inclusão conectados em um só lugar.**
+
+Plataforma web que integra a APAE, profissionais e famílias: acompanhamento dos assistidos, agenda multidisciplinar, comunicação segura e relatórios de progresso.
+
+![Status](https://img.shields.io/badge/status-em%20desenvolvimento-F97316?style=for-the-badge)
+![React](https://img.shields.io/badge/React-19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
 
 </div>
 
 ---
 
-## 💡 Sobre o Projeto
+## 💡 Sobre o projeto
 
-O **Conecta APAE** é uma solução digital desenvolvida com o objetivo de modernizar, dar visibilidade e conectar a instituição (APAE) de forma virtual com a sociedade, voluntários, parceiros e famílias assistidas. 
+O ConectaAPAE nasceu para aproximar a instituição das famílias e dos profissionais que acompanham cada assistido. Em vez de informações espalhadas, tudo fica centralizado: quem cuida, o que foi feito, o que vem a seguir e como conversar com segurança.
 
-O projeto surge da necessidade de centralizar informações, facilitar a comunicação, divulgar campanhas de doação, projetos e tornar a instituição mais acessível no ambiente online.
+O sistema tem dois perfis de acesso, **família** e **profissional**, cada um com login e cadastro próprios e uma área interna adaptada ao seu papel.
 
----
+## ✨ Funcionalidades
 
-## ✨ Principais Funcionalidades
+| Área | O que faz |
+| --- | --- |
+| 🏠 **Página inicial** | Apresenta a plataforma, seus recursos e os caminhos de entrada para famílias e profissionais |
+| 👤 **Assistidos** | Lista e perfil individual de cada assistido |
+| 📅 **Agenda** | Agenda multidisciplinar de atendimentos |
+| 🔔 **Atualizações** | Acompanhamento do progresso e novidades de cada caso |
+| 💬 **Mensagens e conversas** | Comunicação direta entre famílias e profissionais |
+| 🔐 **Autenticação por papel** | Login e cadastro separados para família e profissional, com controle de acesso por função |
 
-* **Página Institucional Dinâmica:** Apresenta a história, missão, visão e valores da APAE.
-* **Transparência e Divulgação:** Mural de notícias, eventos, campanhas de arrecadação e conquistas da instituição.
-* **Canal de Apoio / Doações:** Seção informativa e direcionada para quem deseja contribuir (seja financeiramente, com materiais ou como voluntário).
-* **Painel Administrativo (ou Gestão de Conteúdo):** Área restrita para administradores gerenciarem postagens, avisos e informações exibidas no site.
-* **Responsividade:** Interface adaptada para dispositivos móveis, tablets e computadores.
+## 🛠️ Tecnologias
 
----
+- **Front-end:** React 19, TypeScript, TanStack Start e TanStack Router
+- **Interface:** Tailwind CSS 4, componentes Radix UI (shadcn/ui) e ícones Lucide
+- **Formulários e validação:** React Hook Form e Zod
+- **Dados e gráficos:** TanStack Query e Recharts
+- **Back-end e banco:** Supabase (PostgreSQL, autenticação e migrations versionadas)
+- **Build e ferramentas:** Vite, Bun, ESLint e Prettier
 
-## 🛠️ Tecnologias Utilizadas
-
-Este projeto foi construído utilizando as seguintes tecnologias e ferramentas:
-
-* **Front-end:** *(Ex: HTML5, CSS3, JavaScript / React / Bootstrap)*
-* **Back-end:** *(Ex: Python / Flask / Node.js)*
-* **Banco de Dados:** *(Ex: MySQL / PostgreSQL)*
-* **Controle de Versão:** Git e GitHub
-
----
-
-## 🚀 Como Executar o Projeto Localmente
-
-Se você deseja rodar este projeto em sua máquina para testes ou contribuições, siga os passos abaixo:
+## 🚀 Como rodar localmente
 
 ### Pré-requisitos
-Certifique-se de ter instalado em sua máquina:
-* [Git](https://git-scm.com/)
-* *(Outras ferramentas necessárias, ex: Python, Node.js, XAMPP se usar MySQL)*
+
+- [Git](https://git-scm.com/)
+- [Bun](https://bun.sh/)
+- Um projeto no [Supabase](https://supabase.com/)
 
 ### Passo a passo
 
-1. **Clone o repositório:**
-   ```bash
-   git clone [https://github.com/cryyww/conecta-apae.git](https://github.com/cryyww/conecta-apae.git)
-Entre na pasta do projeto:
+```bash
+# 1. Clone o repositório
+git clone https://github.com/cryyww/conectaapae.git
+cd conectaapae
 
-Bash
-cd conecta-apae
-Configure o Banco de Dados:
+# 2. Instale as dependências
+bun install
 
-Importe o script SQL localizado na pasta /database para o seu gerenciador de banco de dados (MySQL/PostgreSQL).
+# 3. Configure as variáveis de ambiente
+cp .env.example .env
+# edite o .env com os dados do seu projeto Supabase
 
-Configure as credenciais de acesso no arquivo de configuração do projeto (ex: .env ou arquivo de conexão).
+# 4. Aplique as migrations (pasta supabase/migrations) no seu projeto Supabase
 
-Execute a aplicação:
+# 5. Inicie o servidor de desenvolvimento
+bun run dev
+```
 
-(Insira aqui o comando para rodar o projeto, ex: python app.py ou abra o arquivo principal)
+### Variáveis de ambiente
 
-👥 Autores & Contribuidores
-Gabriel Bomfim - Desenvolvimento Inicial - GitHub
+| Variável | Descrição |
+| --- | --- |
+| `SUPABASE_URL` | URL do projeto Supabase (servidor) |
+| `SUPABASE_PUBLISHABLE_KEY` | Chave pública do Supabase (servidor) |
+| `VITE_SUPABASE_URL` | URL do projeto Supabase (navegador) |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Chave pública do Supabase (navegador) |
+| `VITE_SUPABASE_PROJECT_ID` | ID do projeto Supabase |
 
-📌 Status do Projeto
-🚧 O projeto está em constante evolução. Novas funcionalidades e melhorias de interface estão sendo implementadas para otimizar a experiência dos usuários.
+### Scripts disponíveis
+
+| Comando | Função |
+| --- | --- |
+| `bun run dev` | Servidor de desenvolvimento |
+| `bun run build` | Build de produção |
+| `bun run preview` | Pré-visualização do build |
+| `bun run lint` | Análise com ESLint |
+| `bun run format` | Formatação com Prettier |
+
+## 🗂️ Estrutura
+
+```text
+src/
+├── components/    # Componentes de interface e formulários
+├── routes/        # Páginas (login, cadastro e área /app)
+├── integrations/  # Cliente e middleware do Supabase
+├── hooks/         # Hooks, como o de controle de papel
+└── lib/           # Utilitários e configuração
+supabase/
+└── migrations/    # Estrutura do banco de dados
+```
+
+## 👤 Autor
+
+**Gabriel Bomfim**: desenvolvedor full stack júnior e estudante de Sistemas de Informação.
+
+[![GitHub](https://img.shields.io/badge/GitHub-cryyww-181717?style=flat-square&logo=github)](https://github.com/cryyww)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Gabriel%20Bomfim-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/gabriel-bomfim-3082362b3)
+
+## 📌 Status
+
+🚧 Em desenvolvimento. Novas funcionalidades e melhorias de interface estão sendo implementadas.
